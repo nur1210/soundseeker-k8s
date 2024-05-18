@@ -15,10 +15,5 @@ jobs:
         mkdir -p $HOME/.kube
         echo "${K8S_CONFIG}" | base64 --decode > $HOME/.kube/config
       
-    - name: Download Deploy
-      uses: actions/download-artifact@v2
-      with:
-        name: deploy
-      
     - name: Apply pods
       run: kubectl apply -f gateway/ns.yaml
