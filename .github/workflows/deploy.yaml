@@ -5,10 +5,20 @@ jobs:
     name: deploy to cluster
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: deploy to cluster
-      uses: wahyd4/kubectl-helm-action@master
-      env:
-        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+    - name: Kubectl tool installer
+      uses: Azure/setup-kubectl@v1
+
+    - name: Setup kubectl
+      env: 
+        K8S_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${K8S_CONFIG}" | base64 --decode > $HOME/.kube/config
+      
+    - name: Download Deploy
+      uses: actions/download-artifact@v2
       with:
-        args: kubectl apply -f ns.yaml
+        name: deploy
+      
+    - name: Apply pods
+      run: kubectl apply -f gateway/ns.yaml
