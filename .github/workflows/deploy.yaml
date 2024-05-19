@@ -16,4 +16,4 @@ jobs:
         echo "${K8S_CONFIG}" | base64 --decode > $HOME/.kube/config
       
     - name: Apply pods
-      run: kubectl config view && kubectl config get-context && kubectl create ns gateway
+      run: kubectl create ns gateway
