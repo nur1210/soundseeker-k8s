@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/path: "/metrics"
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: nurnechushtan/audio_transformer_service:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: GRPC_SERVER_DOMAIN
+              value: song-service-headless.song-service.svc.cluster.local
+            #              value: envoy.envoy.svc.cluster.local
+            - name: GRPC_SERVER_PORT
+              value: "50051"
+      #              value: "8443"
+            - name: RABBITMQ_HOST
+              value: "rabbitmq-headless.default.svc.cluster.local"
+            - name: RABBITMQ_PORT
+              value: "5672"
+            - name: RABBITMQ_USERNAME
+              value: "user"
+            - name: RABBITMQ_PASSWORD
+              value: "PASSWORD"
+            - name: RABBITMQ_VIRTUAL_HOST
+              value: "/"
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
+      
