@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: { { .Values.appName } }
-  namespace: { { .Values.appName } }
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.appName }}
   labels:
-    app: { { .Values.appName } }
+    app: {{ .Values.appName }}
 spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: { { .Values.appName } }
+      app: {{ .Values.appName }}
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -22,10 +22,10 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9090"
       labels:
-        app: { { .Values.appName } }
+        app: {{ .Values.appName }}
     spec:
       containers:
-        - name: { { .Values.appName } }
+        - name: {{ .Values.appName }}
           image: nurnechushtan/audio_transformer_service:latest
           imagePullPolicy: IfNotPresent
           env:
