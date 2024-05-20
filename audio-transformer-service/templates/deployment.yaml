@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.appName }}
-  namespace: {{ .Values.appName }}
+  name: { { .Values.appName } }
+  namespace: { { .Values.appName } }
   labels:
-    app: {{ .Values.appName }}
+    app: { { .Values.appName } }
 spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: {{ .Values.appName }}
+      app: { { .Values.appName } }
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -22,34 +22,50 @@ spec:
         prometheus.io/scrape: "true"
         prometheus.io/port: "9090"
       labels:
-        app: {{ .Values.appName }}
+        app: { { .Values.appName } }
     spec:
       containers:
-        - name: {{ .Values.appName }}
+        - name: { { .Values.appName } }
           image: nurnechushtan/audio_transformer_service:latest
           imagePullPolicy: IfNotPresent
           env:
-            - name: POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
             - name: GRPC_SERVER_DOMAIN
-              value: song-service-headless.song-service.svc.cluster.local
-            #              value: envoy.envoy.svc.cluster.local
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: grpc-server-domain
             - name: GRPC_SERVER_PORT
-              value: "50051"
-      #              value: "8443"
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key:
+                    grpc-server-port
             - name: RABBITMQ_HOST
-              value: "rabbitmq-headless.default.svc.cluster.local"
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key:
+                    rabbitmq-host
             - name: RABBITMQ_PORT
-              value: "5672"
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-port
             - name: RABBITMQ_USERNAME
-              value: "user"
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-username
             - name: RABBITMQ_PASSWORD
-              value: "PASSWORD"
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-password
             - name: RABBITMQ_VIRTUAL_HOST
-              value: "/"
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-virtual-host
       restartPolicy: Always
       imagePullSecrets:
         - name: regcred
-      
