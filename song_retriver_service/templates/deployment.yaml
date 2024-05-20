@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.appName }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      name: {{ .Values.appName }}
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: nurnechushtan/song_retriver_service:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: RABBITMQ_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-host
+            - name: RABBITMQ_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-port
+            - name: RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-username
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-password
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
