@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pre-install-job
+  annotations:
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: pre-install-job
+          image: dtzar/helm-kubectl:3.14.2
+          command:
+            - /bin/sh
+            - -c
+            - |
+              helm install eg oci://docker.io/envoyproxy/gateway-helm --version v1.0.0 -n gateway --create-namespace
+              kubectl wait --timeout=5m -n gateway deployment/envoy-gateway --for=condition=Available
+      restartPolicy: Never

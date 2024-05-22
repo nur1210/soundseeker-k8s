@@ -5,7 +5,7 @@ metadata:
 spec:
   parentRefs:
     - name: gateway
-      namespace: gateway
+      namespace: {{ .Values.namespace }}
   rules:
     - matches:
       - path:
@@ -16,4 +16,5 @@ spec:
           name: audio-transformer-service-service
           namespace: audio-transformer-service
           port: 3000
+
 
