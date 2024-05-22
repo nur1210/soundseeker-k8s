@@ -55,6 +55,11 @@ spec:
                 secretKeyRef:
                   name: secret
                   key: rabbitmq-password
+            - name: RABBITMQ_VIRTUAL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-virtual-host
       restartPolicy: Always
       imagePullSecrets:
         - name: regcred
