@@ -16,6 +16,8 @@ spec:
             - /bin/sh
             - -c
             - |
-              helm install eg oci://docker.io/envoyproxy/gateway-helm --version v1.0.0 -n gateway --create-namespace
-              kubectl wait --timeout=5m -n gateway deployment/envoy-gateway --for=condition=Available
+              if ! microk8s helm ls -n gateway | grep -q eg; then
+                microk8s helm install eg oci://docker.io/envoyproxy/gateway-helm --version v1.0.0 -n gateway --create-namespace
+                microk8s kubectl wait --timeout=5m -n gateway deployment/envoy-gateway --for=condition=Available
+              fi
       restartPolicy: Never
