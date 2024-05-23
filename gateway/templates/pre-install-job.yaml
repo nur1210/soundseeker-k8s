@@ -17,6 +17,7 @@ spec:
             - -c
             - |
               if ! helm ls -n gateway | grep -q eg; then
+                kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
                 helm install eg oci://docker.io/envoyproxy/gateway-helm --version v1.0.0 -n gateway --create-namespace
                 kubectl wait --timeout=5m -n gateway deployment/envoy-gateway --for=condition=Available
               fi
