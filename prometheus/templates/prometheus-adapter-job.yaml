@@ -17,6 +17,13 @@ spec:
             - -c
             - |
               if ! helm ls -n prometheus | grep -q prometheus-adapter ; then
-                helm install prometheus-adapter prometheus-community/prometheus-adapter --values prometheus-adapter-values.yaml --namespace prometheus
+                helm install prometheus-adapter prometheus-community/prometheus-adapter --values /etc/config/config.json --namespace prometheus
               fi
+          volumeMounts:
+          - name: config-volume
+            mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: prometheus-adapter-config
       restartPolicy: Never
