@@ -17,6 +17,7 @@ spec:
             - -c
             - |
               if ! helm ls -n prometheus | grep -q prometheus-adapter ; then
+                helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
                 helm install prometheus-adapter prometheus-community/prometheus-adapter --values /etc/config/config.json --namespace prometheus
               fi
           volumeMounts:
