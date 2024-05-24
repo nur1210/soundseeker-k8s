@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-linkerd-inject
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: linkerd-inject
+          image: linkerd/cli:v2.10.2
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              kubectl get deploy {{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
+              linkerd inject - | 
+              kubectl apply -f -
