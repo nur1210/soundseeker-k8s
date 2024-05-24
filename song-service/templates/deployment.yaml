@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.appName }}
-          image: nurnechushtan/song_service:latest
+          image: nurnechushtan/song_service:40ed9e23bbb7f66b5a788ab54bb37d5cf09296ca
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 50051
