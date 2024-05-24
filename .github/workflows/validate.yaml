@@ -7,6 +7,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: validate manifests
-        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@1.0.0
+        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@v1.0.1
         with:
           files: audio-transformer-service/templates, gateway/templates, song-service/templates, song_retriver_service/templates
