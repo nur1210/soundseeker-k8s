@@ -27,7 +27,7 @@ spec:
   from:
   - group: gateway.networking.k8s.io
     kind: HTTPRoute
-    namespace: default
+    namespace: gateway
   to:
   - group: ""
     kind: Service
