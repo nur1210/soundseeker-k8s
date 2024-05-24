@@ -5,6 +5,8 @@ metadata:
   namespace: {{ .Values.appName }}
   labels:
     app: {{ .Values.appName }}
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   revisionHistoryLimit: 10
   selector:
