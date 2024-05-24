@@ -1,0 +1,12 @@
+on: push
+name: validate manifests
+
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: validate manifests
+        uses: makocchi-git/actions-k8s-manifests-validate-kubeval@1.0.0
+        with:
+          files: audio-transformer-service/templates, gateway/templates, song-service/templates, song_retriver_service/templates
