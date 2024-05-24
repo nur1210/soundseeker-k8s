@@ -14,6 +14,7 @@ spec:
           command: ["/bin/sh", "-c"]
           args:
             - >
+              apk add --no-cache openssl &&
               curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh &&
               export PATH=$HOME/.linkerd2/bin:$PATH &&
               echo linkerd version: $(linkerd version) &&
