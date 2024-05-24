@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}-linkerd-inject
   annotations:
     "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     spec:
