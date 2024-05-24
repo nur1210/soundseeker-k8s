@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.appName }}
-          image: nurnechushtan/song_retriver_service:latest
+          image: nurnechushtan/song_retriver_service:b22f0ed047055098d2058bd4b52e6a23f25e269c
           imagePullPolicy: IfNotPresent
           env:
             - name: RABBITMQ_HOST
