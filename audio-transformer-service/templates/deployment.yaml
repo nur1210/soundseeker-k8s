@@ -26,7 +26,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.appName }}
-          image: nurnechushtan/audio_transformer_service:latest
+          image: nurnechushtan/audio_transformer_service:c6ee19a2957125ff6b37a16ab466073663c2dca5
           imagePullPolicy: IfNotPresent
           env:
             - name: GRPC_SERVER_DOMAIN
