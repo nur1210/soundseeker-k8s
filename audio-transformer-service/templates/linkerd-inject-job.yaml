@@ -10,10 +10,13 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: linkerd-inject
-          image: linkerd/cli:v2.10.2
+          image: bitnami/kubectl:latest
           command: ["/bin/sh", "-c"]
           args:
             - >
+              apk add --no-cache curl &&
+              curl -sL https://run.linkerd.io/install | sh &&
+              export PATH=$PATH:$HOME/.linkerd2/bin &&
               kubectl get deploy {{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
               linkerd inject - | 
               kubectl apply -f -
