@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: prometheus-adapter-job
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: prometheus-adapter
+          image: dtzar/helm-kubectl:3.14.2
+          command:
+            - /bin/sh
+            - -c
+            - |
+              if ! helm ls -n prometheus | grep -q prometheus-adapter ; then
+                helm install prometheus-adapter prometheus-community/prometheus-adapter --values prometheus-adapter-values.yaml --namespace prometheus
+              fi
+      restartPolicy: Never
