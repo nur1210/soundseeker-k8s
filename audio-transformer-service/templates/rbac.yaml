@@ -1,0 +1,57 @@
+# Role for accessing deployments in the audio-transformer-service namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: audio-transformer-service
+  name: deployment-reader
+rules:
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "watch", "list"]
+
+---
+
+# RoleBinding for the service account in the audio-transformer-service namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-deployments
+  namespace: audio-transformer-service
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: audio-transformer-service
+roleRef:
+  kind: Role
+  name: deployment-reader
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+# Role for accessing configmaps in the linkerd namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: linkerd
+  name: configmap-reader
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "watch", "list"]
+
+---
+
+# RoleBinding for the service account in the linkerd namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-configmaps
+  namespace: linkerd
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: audio-transformer-service
+roleRef:
+  kind: Role
+  name: configmap-reader
+  apiGroup: rbac.authorization.k8s.io
