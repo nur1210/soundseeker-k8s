@@ -22,7 +22,8 @@ spec:
           # Update the repo to make sure we have the latest charts
           helm repo update
 
-          ls -a
+          ls -la
+          pwd
 
           # Check if the prometheus-adapter release exists and update it
           if helm ls -n prometheus | grep -q prometheus-adapter ; then
