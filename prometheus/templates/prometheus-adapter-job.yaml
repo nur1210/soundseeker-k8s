@@ -22,6 +22,8 @@ spec:
           # Update the repo to make sure we have the latest charts
           helm repo update
 
+          ls -a
+
           # Check if the prometheus-adapter release exists and update it
           if helm ls -n prometheus | grep -q prometheus-adapter ; then
             helm upgrade prometheus-adapter prometheus-community/prometheus-adapter --values ./prometheus-adapter-values.yaml --namespace prometheus
