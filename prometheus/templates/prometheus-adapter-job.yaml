@@ -22,7 +22,7 @@ spec:
           # Update the repo to make sure we have the latest charts
           helm repo update
 
-          ls -la
+          ls -l
           pwd
 
           # Check if the prometheus-adapter release exists and update it
