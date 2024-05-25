@@ -27,15 +27,15 @@ spec:
 
           # Check if the prometheus-adapter release exists and update it
           if helm ls -n prometheus | grep -q prometheus-adapter ; then
-            helm upgrade prometheus-adapter prometheus-community/prometheus-adapter --values /etc/config/config --namespace prometheus
+            helm upgrade prometheus-adapter prometheus-community/prometheus-adapter --values ./prometheus-adapter-values.yaml --namespace prometheus
           else
-            helm install prometheus-adapter prometheus-community/prometheus-adapter --values /etc/config/config --namespace prometheus
+            helm install prometheus-adapter prometheus-community/prometheus-adapter --values --values ./prometheus-adapter-values.yaml --namespace prometheus
           fi
-        volumeMounts:
-        - name: config-volume
-          mountPath: /etc/config
-      volumes:
-      - name: config-volume
-        configMap:
-          name: prometheus-adapter-config
+      #   volumeMounts:
+      #   - name: config-volume
+      #     mountPath: /etc/config
+      # volumes:
+      # - name: config-volume
+      #   configMap:
+      #     name: prometheus-adapter-config
       restartPolicy: Never

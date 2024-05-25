@@ -1,55 +1,55 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: prometheus-adapter-config
-data:
-  config: |
-    {
-      "prometheus": {
-        "path": "",
-        "port": 80,
-        "url": "http://prometheus-service"
-      },
-      "rules": {
-        "custom": [
-          {
-            "metricsQuery": "sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)",
-            "name": {
-              "as": "${1}_per_second",
-              "matches": "^(.*)_total"
-            },
-            "resources": {
-              "overrides": {
-                "kubernetes_namespace": {
-                  "resource": "namespace"
-                },
-                "kubernetes_pod_name": {
-                  "resource": "pod"
-                }
-              }
-            },
-            "seriesFilters": [],
-            "seriesQuery": "grpc_requests_total"
-          },
-          {
-            "metricsQuery": "sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)",
-            "name": {
-              "as": "${1}_per_second",
-              "matches": "^(.*)_total"
-            },
-            "resources": {
-              "overrides": {
-                "kubernetes_namespace": {
-                  "resource": "namespace"
-                },
-                "kubernetes_pod_name": {
-                  "resource": "pod"
-                }
-              }
-            },
-            "seriesFilters": [],
-            "seriesQuery": "http_requests_total"
-          }
-        ]
-      }
-    }
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: prometheus-adapter-config
+# data:
+#   config: |
+#     {
+#       "prometheus": {
+#         "path": "",
+#         "port": 80,
+#         "url": "http://prometheus-service"
+#       },
+#       "rules": {
+#         "custom": [
+#           {
+#             "metricsQuery": "sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)",
+#             "name": {
+#               "as": "${1}_per_second",
+#               "matches": "^(.*)_total"
+#             },
+#             "resources": {
+#               "overrides": {
+#                 "kubernetes_namespace": {
+#                   "resource": "namespace"
+#                 },
+#                 "kubernetes_pod_name": {
+#                   "resource": "pod"
+#                 }
+#               }
+#             },
+#             "seriesFilters": [],
+#             "seriesQuery": "grpc_requests_total"
+#           },
+#           {
+#             "metricsQuery": "sum(rate(<<.Series>>{<<.LabelMatchers>>}[1m])) by (<<.GroupBy>>)",
+#             "name": {
+#               "as": "${1}_per_second",
+#               "matches": "^(.*)_total"
+#             },
+#             "resources": {
+#               "overrides": {
+#                 "kubernetes_namespace": {
+#                   "resource": "namespace"
+#                 },
+#                 "kubernetes_pod_name": {
+#                   "resource": "pod"
+#                 }
+#               }
+#             },
+#             "seriesFilters": [],
+#             "seriesQuery": "http_requests_total"
+#           }
+#         ]
+#       }
+#     }
