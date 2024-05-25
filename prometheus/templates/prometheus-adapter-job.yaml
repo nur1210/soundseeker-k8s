@@ -27,8 +27,8 @@ spec:
 
           # Check if the prometheus-adapter release exists and update it
           if helm ls -n prometheus | grep -q prometheus-adapter ; then
-            helm upgrade prometheus-adapter prometheus-community/prometheus-adapter --values prometheus/templates/prometheus-adapter-values.yaml --namespace prometheus
+            helm upgrade prometheus-adapter prometheus-community/prometheus-adapter --values prometheus/prometheus-adapter-values.yaml --namespace prometheus
           else
-            helm install prometheus-adapter prometheus-community/prometheus-adapter --values prometheus/templates/prometheus-adapter-values.yaml --namespace prometheus
+            helm install prometheus-adapter prometheus-community/prometheus-adapter --values prometheus/prometheus-adapter-values.yaml --namespace prometheus
           fi
       restartPolicy: Never
