@@ -23,6 +23,7 @@ spec:
           if helm ls -n prometheus | grep -q prometheus-adapter ; then
             helm upgrade prometheus-adapter prometheus-community/prometheus-adapter --values /etc/config/config --namespace prometheus
           else
+            helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
             helm install prometheus-adapter prometheus-community/prometheus-adapter --values /etc/config/config --namespace prometheus
           fi
         volumeMounts:
