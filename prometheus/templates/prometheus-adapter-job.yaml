@@ -15,10 +15,7 @@ spec:
         command:
         - /bin/sh
         - -c
-        - |
-          # Update the existing ConfigMap with new values
-          kubectl create configmap prometheus-adapter-config --from-file=/etc/config/config --namespace prometheus --dry-run=client -o yaml | kubectl apply -f -
-          
+        - |          
           # Add the prometheus-community repository
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
