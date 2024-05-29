@@ -2885,7 +2885,7 @@ data:
               "editorMode": "code",
               "expr": "sum(rate(grpc_requests_total[1m]))",
               "instant": false,
-              "legendFormat": "{{label_name}}",
+              "legendFormat": "Total Requests Processed per Second",
               "range": true,
               "refId": "A"
             }
