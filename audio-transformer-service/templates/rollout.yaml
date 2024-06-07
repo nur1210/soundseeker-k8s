@@ -1,0 +1,81 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollouts-audio-transformer-service
+  namespace: {{ .Values.appName }}
+  annotations:
+    linkerd.io/inject: enabled
+spec:
+  strategy:
+    canary:
+      canaryService: audio-transformer-service-canary-service # canary service
+      stableService: audio-transformer-service-stable-service # stable service
+      trafficRouting:
+        plugins:
+          argoproj-labs/gatewayAPI:
+            httpRoute: http-audio-transformer-service # httproute
+            namespace: gateway
+      steps:
+      - setWeight: 30
+      - pause: {}
+      - setWeight: 60
+      - pause: {}
+      - setWeight: 100
+      - pause: {}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+      annotations:
+        prometheus.io/path: "/metrics"
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+    spec:
+      containers:
+        - name: {{ .Values.appName }}
+          image: nurnechushtan/audio_transformer_service:7b073779cd4f2f15fb99bedcd5ff69dd7ad3ab41
+          ports:
+              containerPort: 3000
+          env:
+            - name: GRPC_SERVER_DOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: grpc-server-domain
+            - name: GRPC_SERVER_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: grpc-server-port
+            - name: RABBITMQ_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-host
+            - name: RABBITMQ_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-port
+            - name: RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-username
+            - name: RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-password
+            - name: RABBITMQ_VIRTUAL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: rabbitmq-virtual-host
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred

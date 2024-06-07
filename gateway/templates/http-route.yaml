@@ -13,7 +13,11 @@ spec:
           value: /
       backendRefs:
         - kind: Service
-          name: audio-transformer-service-service
+          name: audio-transformer-service-stable-service
+          namespace: audio-transformer-service
+          port: 3000
+        - kind: Service
+          name: audio-transformer-service-canary-service
           namespace: audio-transformer-service
           port: 3000
           
@@ -31,4 +35,7 @@ spec:
   to:
   - group: ""
     kind: Service
-    name: audio-transformer-service-service
+    name: audio-transformer-service-stable-service
+  - group: ""
+    kind: Service
+    name: audio-transformer-service-canary-service
