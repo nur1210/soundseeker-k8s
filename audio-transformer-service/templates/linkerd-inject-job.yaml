@@ -1,18 +1,18 @@
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: {{ .Release.Name }}-linkerd-inject
-  annotations:
-    "argocd.argoproj.io/hook": PostSync
-    "argocd.argoproj.io/hook-delete-policy": HookSucceeded
-spec:
-  template:
-    spec:
-      restartPolicy: OnFailure
-      containers:
-        - name: linkerd-inject
-          image: lachlanevenson/k8s-kubectl:latest
-          command: ["/bin/sh", "-c"]
-          args:
-            - >
-              kubectl rollout restart rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }}
+# apiVersion: batch/v1
+# kind: Job
+# metadata:
+#   name: {{ .Release.Name }}-linkerd-inject
+#   annotations:
+#     "argocd.argoproj.io/hook": PostSync
+#     "argocd.argoproj.io/hook-delete-policy": HookSucceeded
+# spec:
+#   template:
+#     spec:
+#       restartPolicy: OnFailure
+#       containers:
+#         - name: linkerd-inject
+#           image: lachlanevenson/k8s-kubectl:latest
+#           command: ["/bin/sh", "-c"]
+#           args:
+#             - >
+#               kubectl rollout restart rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }}
