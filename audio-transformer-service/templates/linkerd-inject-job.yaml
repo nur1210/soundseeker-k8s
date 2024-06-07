@@ -19,6 +19,6 @@ spec:
               curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh &&
               export PATH=$HOME/.linkerd2/bin:$PATH &&
               echo linkerd version: $(linkerd version) &&
-              kubectl get deployments.apps {{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
+              kubectl get rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
               linkerd inject - | 
               kubectl apply -f -
