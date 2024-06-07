@@ -39,7 +39,9 @@ spec:
         - name: {{ .Values.appName }}
           image: nurnechushtan/audio_transformer_service:7b073779cd4f2f15fb99bedcd5ff69dd7ad3ab41
           ports:
+            - name: http
               containerPort: 3000
+              protocol: TCP
           env:
             - name: GRPC_SERVER_DOMAIN
               valueFrom:
