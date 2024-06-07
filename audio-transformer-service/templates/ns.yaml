@@ -4,6 +4,8 @@ metadata:
   labels:
     kubernetes.io/metadata.name: {{ .Values.appName }}
   name: {{ .Values.appName }}
+  annotations:
+    linkerd.io/inject: enabled
 spec:
   finalizers:
   - kubernetes

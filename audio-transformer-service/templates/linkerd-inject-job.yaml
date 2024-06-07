@@ -7,7 +7,7 @@ metadata:
     # "helm.sh/hook-weight": "-5"
     # "helm.sh/hook-delete-policy": hook-succeeded
     "argocd.argoproj.io/hook": PreSync
-    "argocd.argoproj.io/hook-delete-policy": HookSucceeded
+    "argocd.argoproj.io/hook-delete-policy": "argocd.argoproj.io/hook-delete-policy": HookSucceeded
 spec:
   template:
     spec:
@@ -22,6 +22,7 @@ spec:
               curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh &&
               export PATH=$HOME/.linkerd2/bin:$PATH &&
               echo linkerd version: $(linkerd version) &&
-              kubectl get rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
-              linkerd inject - | 
-              kubectl patch rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} --type=merge -p "$(cat -)"
+              linkerd check
+              # kubectl get rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
+              # linkerd inject - | 
+              # kubectl patch rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} --type=merge -p "$(cat -)"
