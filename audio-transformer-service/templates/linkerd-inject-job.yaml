@@ -23,4 +23,4 @@ spec:
               echo linkerd version: $(linkerd version) &&
               kubectl get rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
               linkerd inject - | 
-              kubectl apply -f -
+              kubectl patch rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} --type=merge -p "$(cat -)"
