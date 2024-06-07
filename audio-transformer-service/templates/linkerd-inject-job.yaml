@@ -3,8 +3,10 @@ kind: Job
 metadata:
   name: {{ .Release.Name }}-linkerd-inject
   annotations:
-    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
     "helm.sh/hook-delete-policy": hook-succeeded
+    "argocd.argoproj.io/hook": PreSync
 spec:
   template:
     spec:
