@@ -1,28 +1,29 @@
-# apiVersion: batch/v1
-# kind: Job
-# metadata:
-#   name: {{ .Release.Name }}-linkerd-inject
-#   annotations:
-#     # "helm.sh/hook": pre-install
-#     # "helm.sh/hook-weight": "-5"
-#     # "helm.sh/hook-delete-policy": hook-succeeded
-#     "argocd.argoproj.io/hook": PreSync
-#     "argocd.argoproj.io/hook-delete-policy": HookSucceeded
-# spec:
-#   template:
-#     spec:
-#       restartPolicy: OnFailure
-#       containers:
-#         - name: linkerd-inject
-#           image: lachlanevenson/k8s-kubectl:latest
-#           command: ["/bin/sh", "-c"]
-#           args:
-#             - >
-#               apk add --no-cache openssl &&
-#               curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh &&
-#               export PATH=$HOME/.linkerd2/bin:$PATH &&
-#               echo linkerd version: $(linkerd version) &&
-#               linkerd check
-#               # kubectl get rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
-#               # linkerd inject - | 
-#               # kubectl patch rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} --type=merge -p "$(cat -)"
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-linkerd-inject
+  annotations:
+    # "helm.sh/hook": pre-install
+    # "helm.sh/hook-weight": "-5"
+    # "helm.sh/hook-delete-policy": hook-succeeded
+    "argocd.argoproj.io/hook": PostSync
+    "argocd.argoproj.io/hook-delete-policy": HookSucceeded
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: linkerd-inject
+          image: lachlanevenson/k8s-kubectl:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              kubectl rollout restart rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }}
+              # apk add --no-cache openssl &&
+              # curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh &&
+              # export PATH=$HOME/.linkerd2/bin:$PATH &&
+              # echo linkerd version: $(linkerd version) &&
+              # linkerd check
+              # kubectl get rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} -o yaml | 
+              # linkerd inject - | 
+              # kubectl patch rollouts.argoproj.io rollouts-{{ .Values.appName }} -n {{ .Values.appName }} --type=merge -p "$(cat -)"
