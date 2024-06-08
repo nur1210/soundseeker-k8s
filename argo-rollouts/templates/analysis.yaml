@@ -20,8 +20,8 @@ spec:
           sum(
             rate(
               response_total{
-                namespace="{{ namespace }}",
-                deployment=~"{{ target }}",
+                namespace="{{ args.namespace }}",
+                deployment=~"{{ args.target }}",
                 classification!="failure",
                 direction="inbound"
               }[{{ interval }}]
