@@ -30,8 +30,8 @@ spec:
           sum(
             rate(
               response_total{
-                namespace="{{ namespace }}",
-                deployment=~"{{ target }}",
+                namespace="{{ .Values.appName }}",
+                deployment=~"rollouts-audio-transformer-service",
                 direction="inbound"
               }[1m]
             )
