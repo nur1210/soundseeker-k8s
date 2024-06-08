@@ -20,7 +20,7 @@ spec:
             rate(
               response_total{
                 namespace="{{ .Values.appName }}",
-                deployment=~"rollouts-audio-transformer-service",
+                app="{{ .Values.appName }}",
                 classification!="failure",
                 direction="inbound"
               }[1m]
@@ -31,7 +31,7 @@ spec:
             rate(
               response_total{
                 namespace="{{ .Values.appName }}",
-                deployment=~"rollouts-audio-transformer-service",
+                app="{{ .Values.appName }}",
                 direction="inbound"
               }[1m]
             )
