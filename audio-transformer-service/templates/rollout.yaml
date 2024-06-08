@@ -21,41 +21,22 @@ spec:
       - analysis:
           templates:
           - templateName: success-rate
-          args:
-          - name: target
-            value: rollouts-audio-transformer-service
-          - name: namespace
-            value: {{ .Values.appName }}
       - setWeight: 30
       - pause: {duration: 2m}
       - analysis:
           templates:
           - templateName: success-rate
-          args:
-          - name: target
-            value: rollouts-audio-transformer-service
-          - name: namespace
-            value: {{ .Values.appName }}
       - setWeight: 50
       - pause: {duration: 2m}
       - analysis:
           templates:
           - templateName: success-rate
-          args:
-          - name: target
-            value: rollouts-audio-transformer-service
-          - name: namespace
-            value: {{ .Values.appName }}
       - setWeight: 80
       - pause: {duration: 5m}
       - analysis:
           templates:
           - templateName: success-rate
           args:
-          - name: target
-            value: rollouts-audio-transformer-service
-          - name: namespace
-            value: {{ .Values.appName }}
       - setWeight: 100
       - pause: {}
   revisionHistoryLimit: 2
