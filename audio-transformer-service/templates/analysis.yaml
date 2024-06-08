@@ -10,7 +10,6 @@ spec:
   #   value: 9090
   metrics:
   - name: success-rate
-    interval: 1m
     successCondition: result[0] >= 0.95
     failureLimit: 3
     provider:
@@ -24,7 +23,7 @@ spec:
                 deployment=~"rollouts-audio-transformer-service",
                 classification!="failure",
                 direction="inbound"
-              }[{{ interval }}]
+              }[1m]
             )
           ) 
           / 
@@ -34,7 +33,7 @@ spec:
                 namespace="{{ namespace }}",
                 deployment=~"{{ target }}",
                 direction="inbound"
-              }[{{ interval }}]
+              }[1m]
             )
           ) 
           * 100
