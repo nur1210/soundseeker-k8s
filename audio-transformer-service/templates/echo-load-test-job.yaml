@@ -5,6 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/hook: Sync
     argocd.argoproj.io/hook-delete-policy: HookSucceeded
+    linkerd.io/inject: disabled
 spec:
   template:
     spec:
