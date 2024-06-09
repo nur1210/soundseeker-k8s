@@ -3,4 +3,4 @@ FROM grafana/k6:latest
 
 COPY . .
 
-CMD ["k6", "run", "./load-test-echo.js"]
+CMD ["run", "./load-test-echo.js"]
