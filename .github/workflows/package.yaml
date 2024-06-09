@@ -1,9 +1,10 @@
 on:
   workflow_dispatch:
-  pull_request:
   push:
     branches:
       - main
+    paths:
+      - 'load-tests/echo/load-test-echo.js'
 
 jobs:
 
