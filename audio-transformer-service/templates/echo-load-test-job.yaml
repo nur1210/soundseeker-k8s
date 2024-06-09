@@ -12,7 +12,7 @@ spec:
       - name: echo-load-test
         image: grafana/k6:latest
         command: ["sh", "-c"]
-        args: ["k6 run - < /app/load-test-echo.js"]
+        args: ["k6 run - < /app/load-test-echo.js && exit 0"]
         volumeMounts:
         - name: echo-load-test-volume
           mountPath: /app
