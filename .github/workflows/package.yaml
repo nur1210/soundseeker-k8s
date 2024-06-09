@@ -41,6 +41,8 @@ jobs:
         
       - name: Update the job tag
         run: |
+          git config --global user.email "${{ secrets.GIT_EMAIL }}"
+          git config --global user.name "nur1210"
           sed -i "s|image: ${{ secrets.NAMESPACE }}/echo-load-test:.*|image: ${{ secrets.NAMESPACE }}/echo-load-test:${{ github.sha }}|" ./argo-rollouts/templates/echo-load-test-job.yaml
           git add ./argo-rollouts/templates/echo-load-test-job.yaml
           git commit -m "Update the job tag to ${{ github.sha }}"
