@@ -7,5 +7,5 @@ spec:
     spec:
       containers:
       - name: echo-load-test
-        image: nurnechushtan/echo-load-test:ba5fe6a3438a1db792c975a51366ddee70c2e0e8
+        image: nurnechushtan/echo-load-test:c90831946b570fb6cf00a9935345cb391245e7e9
       restartPolicy: Never
