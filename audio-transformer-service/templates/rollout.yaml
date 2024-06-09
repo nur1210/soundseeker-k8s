@@ -15,12 +15,12 @@ spec:
           argoproj-labs/gatewayAPI:
             httpRoute: http-audio-transformer-service # httproute
             namespace: gateway
-      prePromotionAnalysis:
-        templates:
-        - templateName: echo-load-test
       steps:
       - setWeight: 10
       - pause: {duration: 2m}
+        prePromotionAnalysis:
+          templates:
+          - templateName: echo-load-test      
       - analysis:
           templates:
           - templateName: success-rate
