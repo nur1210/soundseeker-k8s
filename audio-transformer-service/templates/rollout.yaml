@@ -18,9 +18,6 @@ spec:
       steps:
       - setWeight: 10
       - pause: {duration: 2m}
-        prePromotionAnalysis:
-          templates:
-          - templateName: echo-load-test      
       - analysis:
           templates:
           - templateName: success-rate
