@@ -3,11 +3,6 @@ kind: AnalysisTemplate
 metadata:
   name: success-rate
 spec:
-  # args:
-  # - name: target
-  # - name: namespace
-  # - name: prometheus-port
-  #   value: 9090
   metrics:
   - name: success-rate
     successCondition: result[0] >= 0.95
