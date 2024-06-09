@@ -15,7 +15,7 @@ export const options = {
 
 // Simulated user behavior
 export default function () {
-  let res = http.post("http://192.168.221:80/echo");
+  let res = http.post("http://192.168.120.221/echo");
   // Validate response status
   check(res, { "status was 200": (r) => r.status == 200 });
   sleep(1);
