@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ClusterAnalysisTemplate
+metadata:
+  name: echo-load-test
+spec:
+  metrics:
+  - name: echo-load-test
+    successCondition: result == 0
+    provider:
+      job:
+        spec:
+          template:
+            spec:
+              containers:
+              - name: echo-load-test
+                image: grafana/k6:latest
+                command: ["sh", "-c"]
+                args: ["k6 run - < /app/load-test-echo.js"]
+                volumeMounts:
+                - name: echo-load-test-volume
+                  mountPath: /app
+              volumes:
+              - name: echo-load-test-volume
+                configMap:
+                  name: echo-load-test
+              restartPolicy: Never
