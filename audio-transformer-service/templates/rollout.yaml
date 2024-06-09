@@ -54,7 +54,7 @@ spec:
     spec:
       containers:
         - name: {{ .Values.appName }}
-          image: nurnechushtan/audio_transformer_service:5ec15ca9a292649e78b6d88cec3735bd876f5177
+          image: nurnechushtan/audio_transformer_service:af29381a57c3e55381f7df24e93bde2e085e0a94
           ports:
             - name: http
               containerPort: 3000
