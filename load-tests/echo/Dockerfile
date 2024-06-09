@@ -1,6 +1,11 @@
 # Start from the k6 image
 FROM grafana/k6:latest
 
-COPY . .
+# Set the working directory in the container
+WORKDIR /app
 
-CMD ["run", "./load-test-echo.js"]
+# Copy the directory contents into the container at /app
+COPY . /app
+
+# Run the load test
+CMD ["run", "/app/load-test-echo.js"]
