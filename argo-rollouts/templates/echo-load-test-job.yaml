@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: echo-load-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: echo-load-test
+        image: nurnechushtan/echo-load-test:1db393529b6040eabfd6825a979f03335f64b0bd
+      restartPolicy: Never
