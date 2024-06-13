@@ -21,24 +21,32 @@ spec:
       - analysis:
           templates:
           - templateName: success-rate
+          - templateName: latency-check
       - setWeight: 30
       - pause: {duration: 2m}
       - analysis:
           templates:
           - templateName: success-rate
+          - templateName: latency-check
       - setWeight: 50
       - pause: {duration: 2m}
       - analysis:
           templates:
           - templateName: success-rate
+          - templateName: latency-check
       - setWeight: 80
       - pause: {duration: 5m}
       - analysis:
           templates:
           - templateName: success-rate
+          - templateName: latency-check
           args:
       - setWeight: 100
       - pause: {duration: 5m}
+      - analysis:
+          templates:
+          - templateName: success-rate
+          - templateName: latency-check
   revisionHistoryLimit: 2
   selector:
     matchLabels:
