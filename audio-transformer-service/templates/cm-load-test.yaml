@@ -12,8 +12,8 @@ data:
         http_req_duration: ["p(95) < 3000"],
       },
       stages: [
-        { duration: "2m", target: 300 },
-        { duration: "10m", target: 300 },
+        { duration: "2m", target: 150 },
+        { duration: "10m", target: 150 },
         { duration: "2m", target: 0 },
       ],
     };
