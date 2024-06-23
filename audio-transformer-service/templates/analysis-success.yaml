@@ -5,7 +5,7 @@ metadata:
 spec:
   metrics:
   - name: success-rate
-    successCondition: result[0] >= 0.98
+    successCondition: result[0] >= 98
     failureLimit: 3
     provider:
       prometheus:
